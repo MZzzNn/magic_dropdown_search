@@ -73,7 +73,8 @@ class _MagicDropdownSearchState extends State<MagicDropdownSearch> {
         if (v != null) {
           value = v;
           isSelecting = true;
-        } else {
+        }
+        if (value == null) {
           isSelecting = false;
         }
         setState(() {});
