@@ -3,7 +3,7 @@ part of '../magic_dropdown_search.dart';
 final GlobalKey<FormFieldState<String>> dropdownGlobalKey =
     GlobalKey<FormFieldState<String>>();
 
-class DropDownSearch extends StatefulWidget {
+class MagicDropdownSearch extends StatefulWidget {
   final String label;
   final String? hint;
   final String? hintSearch;
@@ -16,7 +16,7 @@ class DropDownSearch extends StatefulWidget {
   final Future<List<String>> Function(String) onChangedSearch;
   final Widget? suffixIcon;
 
-  DropDownSearch({
+  MagicDropdownSearch({
     required this.label,
     required this.onChanged,
     required this.onChangedSearch,
@@ -33,10 +33,10 @@ class DropDownSearch extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<DropDownSearch> createState() => _DropDownSearchState();
+  State<MagicDropdownSearch> createState() => _MagicDropdownSearchState();
 }
 
-class _DropDownSearchState extends State<DropDownSearch> {
+class _MagicDropdownSearchState extends State<MagicDropdownSearch> {
   late bool isSelecting;
   late String? value;
 
