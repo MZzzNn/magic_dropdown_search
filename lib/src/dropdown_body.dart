@@ -1,15 +1,16 @@
 part of '../magic_dropdown_search.dart';
 
+@immutable
 class DropDownSearchBody extends StatefulWidget {
   final String? hintSearch;
   final String? initValue;
   final ValueChanged<String?>? onChanged;
   final double? dropdownHeight;
   final double? itemHeight;
-  List<String> dropdownItems;
+  final List<String> dropdownItems;
   final Future<List<String>> Function(String) onChangedSearch;
 
-  DropDownSearchBody({
+  const DropDownSearchBody({
     super.key,
     this.initValue,
     this.hintSearch,

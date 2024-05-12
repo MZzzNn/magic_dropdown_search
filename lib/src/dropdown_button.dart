@@ -3,6 +3,7 @@ part of '../magic_dropdown_search.dart';
 final GlobalKey<FormFieldState<String>> dropdownGlobalKey =
     GlobalKey<FormFieldState<String>>();
 
+@immutable
 class MagicDropdownSearch extends StatefulWidget {
   final String label;
   final String? hint;
@@ -12,11 +13,11 @@ class MagicDropdownSearch extends StatefulWidget {
   final double? buttonHeight, buttonWidth;
   final double? dropdownHeight;
   final double? itemHeight;
-  List<String> dropdownItems;
+  final List<String> dropdownItems;
   final Future<List<String>> Function(String) onChangedSearch;
   final Widget? suffixIcon;
 
-  MagicDropdownSearch({
+  const MagicDropdownSearch({
     required this.label,
     required this.onChanged,
     required this.onChangedSearch,
