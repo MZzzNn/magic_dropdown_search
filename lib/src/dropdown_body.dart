@@ -89,11 +89,25 @@ class _DropDownSearchBodyState extends State<DropDownSearchBody> {
       _searchController.clear();
       setState(() {});
       searchItemsNotifier.value = await widget.onChangedSearch('');
+      if (widget.isCanNotSelect) {
+        searchItemsNotifier.value = [widget.notSelectedText, ...searchItemsNotifier.value];
+      }
       isSearching = false;
       setState(() {});
     } catch (e, s) {
       debugPrint('Error on clear search: $e $s');
     }
+  }
+
+  bool get _checkIsEmptyList {
+   if (searchItemsNotifier.value.isEmpty) {
+     return true;
+   }else{
+     if (searchItemsNotifier.value.length == 1 && searchItemsNotifier.value[0] == widget.notSelectedText) {
+       return true;
+     }
+     return false;
+   }
   }
 
   @override
@@ -112,7 +126,7 @@ class _DropDownSearchBodyState extends State<DropDownSearchBody> {
               valueListenable: searchItemsNotifier,
               builder: (context, items, child) {
                 if (isSearching) return _loading();
-                if (items.isEmpty) return _emptyList();
+                if (_checkIsEmptyList) return _emptyList();
                 return ListView.separated(
                   itemCount: items.length,
                   padding: const EdgeInsets.symmetric(vertical: 5),
