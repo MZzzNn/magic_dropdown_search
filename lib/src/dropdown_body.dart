@@ -9,7 +9,8 @@ class DropDownSearchBody extends StatefulWidget {
   final double? itemHeight;
   final List<String> dropdownItems;
   final Future<List<String>> Function(String) onChangedSearch;
-
+  final bool isCanNotSelect;
+  final String notSelectedText;
   const DropDownSearchBody({
     super.key,
     this.initValue,
@@ -19,6 +20,8 @@ class DropDownSearchBody extends StatefulWidget {
     this.itemHeight,
     required this.dropdownItems,
     required this.onChangedSearch,
+    this.isCanNotSelect = false,
+    this.notSelectedText = '--Bitte wählen--',
   });
 
   @override
@@ -26,13 +29,11 @@ class DropDownSearchBody extends StatefulWidget {
 }
 
 class _DropDownSearchBodyState extends State<DropDownSearchBody> {
-  late bool isSelecting;
   late String? value;
   late TextEditingController _searchController;
   String searchQuery = '';
   bool isSearching = false;
-  ValueNotifier<List<String>> searchItemsNotifier =
-      ValueNotifier<List<String>>([]);
+  ValueNotifier<List<String>> searchItemsNotifier = ValueNotifier<List<String>>([]);
 
   @override
   void initState() {
@@ -44,21 +45,22 @@ class _DropDownSearchBodyState extends State<DropDownSearchBody> {
 
   void _initValue() {
     if (mounted) {
-      isSelecting = widget.initValue != null;
       value = widget.initValue;
       searchItemsNotifier.value = widget.dropdownItems;
+      if (widget.isCanNotSelect) {
+        searchItemsNotifier.value = [widget.notSelectedText, ...widget.dropdownItems];
+      }
       setState(() {});
     }
   }
 
   void onChanged(String? v) {
     value = v;
-    if (v == null) {
-      isSelecting = false;
+    if (v == widget.notSelectedText) {
+      widget.onChanged!("");
     } else {
-      isSelecting = true;
+      widget.onChanged!(v);
     }
-    widget.onChanged!(v);
     setState(() {});
   }
 
@@ -68,6 +70,9 @@ class _DropDownSearchBodyState extends State<DropDownSearchBody> {
       isSearching = true;
       setState(() {});
       searchItemsNotifier.value = await widget.onChangedSearch(value);
+      if (widget.isCanNotSelect) {
+        searchItemsNotifier.value = [widget.notSelectedText, ...searchItemsNotifier.value];
+      }
       isSearching = false;
       setState(() {});
     } catch (e, s) {

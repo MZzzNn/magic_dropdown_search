@@ -16,6 +16,8 @@ class MagicDropdownSearch extends StatefulWidget {
   final List<String> dropdownItems;
   final Future<List<String>> Function(String) onChangedSearch;
   final Widget? suffixIcon;
+  final bool isCanNotSelect;
+  final String notSelectedText;
 
   const MagicDropdownSearch({
     required this.label,
@@ -30,6 +32,8 @@ class MagicDropdownSearch extends StatefulWidget {
     this.dropdownHeight,
     this.buttonHeight,
     this.suffixIcon,
+    this.isCanNotSelect = false,
+    this.notSelectedText = '--Bitte wählen--',
     Key? key,
   }) : super(key: key);
 
@@ -68,6 +72,8 @@ class _MagicDropdownSearchState extends State<MagicDropdownSearch> {
             itemHeight: widget.itemHeight,
             dropdownHeight: widget.dropdownHeight,
             initValue: value,
+            isCanNotSelect: widget.isCanNotSelect,
+            notSelectedText: widget.notSelectedText,
           ),
         );
         if (v != null) {
