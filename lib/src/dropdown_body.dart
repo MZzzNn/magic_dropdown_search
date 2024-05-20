@@ -11,6 +11,7 @@ class DropDownSearchBody extends StatefulWidget {
   final Future<List<String>> Function(String) onChangedSearch;
   final bool isCanNotSelect;
   final String notSelectedText;
+  final Widget? empty;
   const DropDownSearchBody({
     super.key,
     this.initValue,
@@ -22,6 +23,7 @@ class DropDownSearchBody extends StatefulWidget {
     required this.onChangedSearch,
     this.isCanNotSelect = false,
     this.notSelectedText = '--Bitte wählen--',
+    this.empty,
   });
 
   @override
@@ -213,6 +215,9 @@ class _DropDownSearchBodyState extends State<DropDownSearchBody> {
   }
 
   Widget _emptyList() {
+    if (widget.empty != null) {
+      return widget.empty!;
+    }
     return const Center(
       child: Text('No items found'),
     );

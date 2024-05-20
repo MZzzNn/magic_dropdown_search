@@ -18,7 +18,7 @@ class MagicDropdownSearch extends StatefulWidget {
   final Widget? suffixIcon;
   final bool isCanNotSelect;
   final String notSelectedText;
-
+  final Widget? empty;
   const MagicDropdownSearch({
     required this.label,
     required this.onChanged,
@@ -34,6 +34,7 @@ class MagicDropdownSearch extends StatefulWidget {
     this.suffixIcon,
     this.isCanNotSelect = false,
     this.notSelectedText = '--Bitte wählen--',
+    this.empty,
     Key? key,
   }) : super(key: key);
 
@@ -74,6 +75,7 @@ class _MagicDropdownSearchState extends State<MagicDropdownSearch> {
             initValue: value,
             isCanNotSelect: widget.isCanNotSelect,
             notSelectedText: widget.notSelectedText,
+            empty: widget.empty,
           ),
         );
         if (v != null) {
