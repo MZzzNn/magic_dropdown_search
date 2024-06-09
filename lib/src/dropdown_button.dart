@@ -2,7 +2,6 @@ part of '../magic_dropdown_search.dart';
 
 @immutable
 class MagicDropdownSearch extends StatefulWidget {
-  final String? hintSearch;
   final String? initValue;
   final ValueChanged<String?>? onChanged;
   final double? dropdownHeight;
@@ -14,13 +13,14 @@ class MagicDropdownSearch extends StatefulWidget {
   final Widget? empty;
   final InputDecoration? buttonDecoration;
   final InputDecoration? searchDecoration;
+  final BoxDecoration? dropdownBoxDecoration;
 
   const MagicDropdownSearch({
     required this.onChanged,
     required this.onChangedSearch,
     this.dropdownItems = const [],
-    this.hintSearch,
     this.initValue,
+    this.dropdownBoxDecoration,
     this.itemHeight,
     this.dropdownHeight,
     this.isCanNotSelect = false,
@@ -71,6 +71,7 @@ class _MagicDropdownSearchState extends State<MagicDropdownSearch> {
             notSelectedText: widget.notSelectedText,
             empty: widget.empty,
             searchDecoration: widget.searchDecoration,
+            dropdownBoxDecoration: widget.dropdownBoxDecoration,
           ),
           dropdownGlobalKey, // Pass the key
         );

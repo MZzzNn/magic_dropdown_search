@@ -12,10 +12,12 @@ class DropDownSearchBody extends StatefulWidget {
   final String notSelectedText;
   final Widget? empty;
   final InputDecoration? searchDecoration;
+  final BoxDecoration? dropdownBoxDecoration;
 
   const DropDownSearchBody({
     super.key,
     this.searchDecoration,
+    this.dropdownBoxDecoration,
     this.initValue,
     this.onChanged,
     this.dropdownHeight,
@@ -124,8 +126,9 @@ class _DropDownSearchBodyState extends State<DropDownSearchBody> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: widget.dropdownHeight ?? 350,
+      decoration: widget.dropdownBoxDecoration,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -265,6 +268,7 @@ class _DropDownSearchBodyState extends State<DropDownSearchBody> {
         border: widget.searchDecoration?.border ?? border,
         enabledBorder: widget.searchDecoration?.enabledBorder ?? border,
         disabledBorder: widget.searchDecoration?.disabledBorder ?? border,
+        focusedBorder: widget.searchDecoration?.focusedBorder ?? border,
       );
     } else {
       return InputDecoration(
