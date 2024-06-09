@@ -2,15 +2,24 @@ part of '../magic_dropdown_search.dart';
 
 class DropDownSearchDialog extends StatefulWidget {
   final Widget body;
+  final GlobalKey<FormFieldState<String>> dropdownKey; // Added this
 
-  const DropDownSearchDialog({super.key, required this.body});
+  const DropDownSearchDialog({
+    super.key,
+    required this.body,
+    required this.dropdownKey, // Added this
+  });
 
-  static Future<String?> show(BuildContext context, Widget body) async{
-   return showDialog(
+  static Future<String?> show(
+      BuildContext context,
+      Widget body,
+      GlobalKey<FormFieldState<String>> dropdownKey, // Added this
+      ) async {
+    return showDialog(
       context: context,
       barrierColor: Colors.black.withOpacity(0.05),
       builder: (context) {
-        return DropDownSearchDialog(body: body);
+        return DropDownSearchDialog(body: body, dropdownKey: dropdownKey); // Pass the key
       },
     );
   }
@@ -44,14 +53,14 @@ class _DropDownSearchDialogState extends State<DropDownSearchDialog>
 
   Offset _getPosition(BuildContext context) {
     RenderBox renderBox =
-        dropdownGlobalKey.currentContext!.findRenderObject() as RenderBox;
+    widget.dropdownKey.currentContext!.findRenderObject() as RenderBox; // Use the key from the widget
     Offset position = renderBox.localToGlobal(Offset.zero);
     return position;
   }
 
   Size _getSize(BuildContext context) {
     RenderBox renderBox =
-        dropdownGlobalKey.currentContext!.findRenderObject() as RenderBox;
+    widget.dropdownKey.currentContext!.findRenderObject() as RenderBox; // Use the key from the widget
     return renderBox.size;
   }
 

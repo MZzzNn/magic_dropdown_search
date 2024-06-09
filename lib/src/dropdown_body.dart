@@ -2,7 +2,6 @@ part of '../magic_dropdown_search.dart';
 
 @immutable
 class DropDownSearchBody extends StatefulWidget {
-  final String? hintSearch;
   final String? initValue;
   final ValueChanged<String?>? onChanged;
   final double? dropdownHeight;
@@ -12,10 +11,12 @@ class DropDownSearchBody extends StatefulWidget {
   final bool isCanNotSelect;
   final String notSelectedText;
   final Widget? empty;
+  final InputDecoration? searchDecoration;
+
   const DropDownSearchBody({
     super.key,
+    this.searchDecoration,
     this.initValue,
-    this.hintSearch,
     this.onChanged,
     this.dropdownHeight,
     this.itemHeight,
@@ -35,7 +36,8 @@ class _DropDownSearchBodyState extends State<DropDownSearchBody> {
   late TextEditingController _searchController;
   String searchQuery = '';
   bool isSearching = false;
-  ValueNotifier<List<String>> searchItemsNotifier = ValueNotifier<List<String>>([]);
+  ValueNotifier<List<String>> searchItemsNotifier =
+      ValueNotifier<List<String>>([]);
 
   @override
   void initState() {
@@ -50,7 +52,10 @@ class _DropDownSearchBodyState extends State<DropDownSearchBody> {
       value = widget.initValue;
       searchItemsNotifier.value = widget.dropdownItems;
       if (widget.isCanNotSelect) {
-        searchItemsNotifier.value = [widget.notSelectedText, ...widget.dropdownItems];
+        searchItemsNotifier.value = [
+          widget.notSelectedText,
+          ...widget.dropdownItems
+        ];
       }
       setState(() {});
     }
@@ -73,7 +78,10 @@ class _DropDownSearchBodyState extends State<DropDownSearchBody> {
       setState(() {});
       searchItemsNotifier.value = await widget.onChangedSearch(value);
       if (widget.isCanNotSelect) {
-        searchItemsNotifier.value = [widget.notSelectedText, ...searchItemsNotifier.value];
+        searchItemsNotifier.value = [
+          widget.notSelectedText,
+          ...searchItemsNotifier.value
+        ];
       }
       isSearching = false;
       setState(() {});
@@ -90,7 +98,10 @@ class _DropDownSearchBodyState extends State<DropDownSearchBody> {
       setState(() {});
       searchItemsNotifier.value = await widget.onChangedSearch('');
       if (widget.isCanNotSelect) {
-        searchItemsNotifier.value = [widget.notSelectedText, ...searchItemsNotifier.value];
+        searchItemsNotifier.value = [
+          widget.notSelectedText,
+          ...searchItemsNotifier.value
+        ];
       }
       isSearching = false;
       setState(() {});
@@ -100,14 +111,15 @@ class _DropDownSearchBodyState extends State<DropDownSearchBody> {
   }
 
   bool get _checkIsEmptyList {
-   if (searchItemsNotifier.value.isEmpty) {
-     return true;
-   }else{
-     if (searchItemsNotifier.value.length == 1 && searchItemsNotifier.value[0] == widget.notSelectedText) {
-       return true;
-     }
-     return false;
-   }
+    if (searchItemsNotifier.value.isEmpty) {
+      return true;
+    } else {
+      if (searchItemsNotifier.value.length == 1 &&
+          searchItemsNotifier.value[0] == widget.notSelectedText) {
+        return true;
+      }
+      return false;
+    }
   }
 
   @override
@@ -160,39 +172,7 @@ class _DropDownSearchBodyState extends State<DropDownSearchBody> {
         onTapOutside: (details) {
           FocusManager.instance.primaryFocus?.unfocus();
         },
-        decoration: InputDecoration(
-          hintText: widget.hintSearch ?? 'Search',
-          contentPadding: EdgeInsets.zero,
-          filled: true,
-          fillColor: const Color(0xffF4F4F4),
-          hintStyle: const TextStyle(color: Color(0xff99999999)),
-          prefixIcon:
-              const Icon(Icons.search, color: Color(0xff99999999), size: 23),
-          suffixIcon: AnimatedOpacity(
-            opacity: searchQuery.isNotEmpty ? 1 : 0,
-            duration: const Duration(milliseconds: 250),
-            child: IconButton(
-              onPressed: onClearSearch,
-              icon: const Icon(
-                Icons.clear,
-                size: 20,
-                color: Color(0xff99999999),
-              ),
-            ),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none,
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none,
-          ),
-        ),
+        decoration: decoration,
       ),
     );
   }
@@ -258,6 +238,66 @@ class _DropDownSearchBodyState extends State<DropDownSearchBody> {
           );
         },
       ),
+    );
+  }
+
+  InputDecoration get decoration {
+    if (widget.searchDecoration != null) {
+      return widget.searchDecoration!.copyWith(
+        contentPadding:
+            widget.searchDecoration?.contentPadding ?? EdgeInsets.zero,
+        hintStyle: widget.searchDecoration?.hintStyle ??
+            const TextStyle(color: Color(0xff99999999)),
+        prefixIcon: widget.searchDecoration?.prefixIcon ??
+            const Icon(Icons.search, color: Color(0xff99999999), size: 23),
+        suffixIcon: AnimatedOpacity(
+          opacity: searchQuery.isNotEmpty ? 1 : 0,
+          duration: const Duration(milliseconds: 250),
+          child: IconButton(
+            onPressed: onClearSearch,
+            icon: const Icon(
+              Icons.clear,
+              size: 20,
+              color: Color(0xff99999999),
+            ),
+          ),
+        ),
+        border: widget.searchDecoration?.border ?? border,
+        enabledBorder: widget.searchDecoration?.enabledBorder ?? border,
+        disabledBorder: widget.searchDecoration?.disabledBorder ?? border,
+      );
+    } else {
+      return InputDecoration(
+        hintText: 'Search',
+        contentPadding: EdgeInsets.zero,
+        filled: true,
+        fillColor: Colors.white,
+        hintStyle: const TextStyle(color: Color(0xff99999999)),
+        prefixIcon:
+            const Icon(Icons.search, color: Color(0xff99999999), size: 23),
+        suffixIcon: AnimatedOpacity(
+          opacity: searchQuery.isNotEmpty ? 1 : 0,
+          duration: const Duration(milliseconds: 250),
+          child: IconButton(
+            onPressed: onClearSearch,
+            icon: const Icon(
+              Icons.clear,
+              size: 20,
+              color: Color(0xff99999999),
+            ),
+          ),
+        ),
+        border: border,
+        enabledBorder: border,
+        disabledBorder: border,
+      );
+    }
+  }
+
+  InputBorder get border {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: BorderSide.none,
     );
   }
 }

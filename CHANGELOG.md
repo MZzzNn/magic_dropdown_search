@@ -5,6 +5,16 @@ All notable changes to the "magic_dropdown_search" project will be documented in
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.4] - 2024-06-09
+
+### Added
+- Added the `buttonDecoration` property to customize the dropdown button.
+- Added the `searchDecoration` property to customize the search bar.
+- Make the dropdown button and search bar customizable.
+
+### Fixed
+- Fixed the issue with the dropdown global key.
+
 ## [0.0.3] - 2024-01-03
 
 ### Added

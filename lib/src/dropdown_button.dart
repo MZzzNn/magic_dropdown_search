@@ -1,42 +1,35 @@
 part of '../magic_dropdown_search.dart';
 
-final GlobalKey<FormFieldState<String>> dropdownGlobalKey =
-    GlobalKey<FormFieldState<String>>();
-
 @immutable
 class MagicDropdownSearch extends StatefulWidget {
-  final String label;
-  final String? hint;
   final String? hintSearch;
   final String? initValue;
   final ValueChanged<String?>? onChanged;
-  final double? buttonHeight, buttonWidth;
   final double? dropdownHeight;
   final double? itemHeight;
   final List<String> dropdownItems;
   final Future<List<String>> Function(String) onChangedSearch;
-  final Widget? suffixIcon;
   final bool isCanNotSelect;
   final String notSelectedText;
   final Widget? empty;
+  final InputDecoration? buttonDecoration;
+  final InputDecoration? searchDecoration;
+
   const MagicDropdownSearch({
-    required this.label,
     required this.onChanged,
     required this.onChangedSearch,
     this.dropdownItems = const [],
-    this.hint,
     this.hintSearch,
     this.initValue,
-    this.buttonWidth,
     this.itemHeight,
     this.dropdownHeight,
-    this.buttonHeight,
-    this.suffixIcon,
     this.isCanNotSelect = false,
     this.notSelectedText = '--Bitte wählen--',
     this.empty,
-    Key? key,
-  }) : super(key: key);
+    this.buttonDecoration,
+    this.searchDecoration,
+    super.key,
+  });
 
   @override
   State<MagicDropdownSearch> createState() => _MagicDropdownSearchState();
@@ -45,6 +38,8 @@ class MagicDropdownSearch extends StatefulWidget {
 class _MagicDropdownSearchState extends State<MagicDropdownSearch> {
   late bool isSelecting;
   late String? value;
+  final GlobalKey<FormFieldState<String>> dropdownGlobalKey =
+      GlobalKey<FormFieldState<String>>();
 
   @override
   void initState() {
@@ -67,7 +62,6 @@ class _MagicDropdownSearchState extends State<MagicDropdownSearch> {
           context,
           DropDownSearchBody(
             onChanged: widget.onChanged,
-            hintSearch: widget.hintSearch,
             onChangedSearch: widget.onChangedSearch,
             dropdownItems: widget.dropdownItems,
             itemHeight: widget.itemHeight,
@@ -76,7 +70,9 @@ class _MagicDropdownSearchState extends State<MagicDropdownSearch> {
             isCanNotSelect: widget.isCanNotSelect,
             notSelectedText: widget.notSelectedText,
             empty: widget.empty,
+            searchDecoration: widget.searchDecoration,
           ),
+          dropdownGlobalKey, // Pass the key
         );
         if (v != null) {
           value = v;
@@ -92,48 +88,64 @@ class _MagicDropdownSearchState extends State<MagicDropdownSearch> {
         style: Theme.of(context).textTheme.labelMedium!.copyWith(
               fontWeight: FontWeight.w400,
               fontSize: isSelecting == true ? null : 11,
-              color: isSelecting ? const Color(0xff111111) : const Color(0xff767676),
+              color: isSelecting
+                  ? const Color(0xff111111)
+                  : const Color(0xff767676),
             ),
         controller: TextEditingController(text: value),
         minLines: 1,
         maxLines: 5,
-        decoration: InputDecoration(
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-          labelText: widget.label,
-          hintText: widget.hint,
-          enabled: false,
-          isDense: true,
-          hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(
-              color: const Color(0xff767676), fontWeight: FontWeight.w400),
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          constraints: BoxConstraints(
-            // maxHeight: buttonHeight ?? double.infinity,
-            minHeight: widget.buttonHeight ?? 45,
-          ),
-          suffixIconConstraints: BoxConstraints(
-            maxHeight: widget.buttonHeight ?? double.infinity,
-            minHeight: widget.buttonHeight ?? 45,
-          ),
-          // prefixIconConstraints: BoxConstraints(
-          //   maxHeight: buttonHeight ?? 70,
-          //   maxWidth: buttonHeight ?? 70,
-          // ),
-          disabledBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            borderSide: BorderSide(color: Color(0xffD2D5DA)),
-          ),
-          suffixIcon: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: widget.suffixIcon ??
-                const Icon(
-                  FontAwesomeIcons.angleDown,
-                  size: 17,
-                  color: Color(0xff767676),
-                ),
-          ),
-        ),
+        decoration: decoration,
       ),
     );
+  }
+
+  InputDecoration get decoration {
+    if (widget.buttonDecoration != null) {
+      return widget.buttonDecoration!.copyWith(
+        enabled: false,
+        contentPadding: widget.buttonDecoration?.contentPadding ??
+            const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        disabledBorder: widget.buttonDecoration?.disabledBorder ??
+            const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderSide: BorderSide(color: Color(0xffD2D5DA)),
+            ),
+        suffixIcon: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: widget.buttonDecoration?.suffixIcon ??
+              const Icon(
+                FontAwesomeIcons.angleDown,
+                size: 17,
+                color: Color(0xff767676),
+              ),
+        ),
+      );
+    } else {
+      return const InputDecoration(
+        contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        enabled: false,
+        isDense: true,
+        filled: true,
+        fillColor: Colors.white,
+        hintStyle:
+            TextStyle(color: Color(0xff767676), fontWeight: FontWeight.w400),
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        constraints: BoxConstraints(minHeight: 45),
+        suffixIconConstraints: BoxConstraints(minHeight: 45),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderSide: BorderSide(color: Color(0xffD2D5DA)),
+        ),
+        suffixIcon: Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Icon(
+            FontAwesomeIcons.angleDown,
+            size: 17,
+            color: Color(0xff767676),
+          ),
+        ),
+      );
+    }
   }
 }
