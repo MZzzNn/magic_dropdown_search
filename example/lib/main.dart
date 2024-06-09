@@ -43,6 +43,16 @@ class MyApp extends StatelessWidget {
                     errorStyle: TextStyle(color: Colors.red),
                     hintStyle: TextStyle(color: Colors.grey),
                   ),
+                  dropdownBoxDecoration:  DropDownBoxDecoration(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                        color: Colors.blue,
+                        width: 1,
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Expanded(

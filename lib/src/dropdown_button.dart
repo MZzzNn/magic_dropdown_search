@@ -60,7 +60,6 @@ class _MagicDropdownSearchState extends State<MagicDropdownSearch> {
       onTap: () async {
         String? v = await DropDownSearchDialog.show(
           context,
-          dropdownBoxDecoration: widget.dropdownBoxDecoration,
           DropDownSearchBody(
             onChanged: widget.onChanged,
             onChangedSearch: widget.onChangedSearch,
@@ -73,7 +72,8 @@ class _MagicDropdownSearchState extends State<MagicDropdownSearch> {
             empty: widget.empty,
             searchDecoration: widget.searchDecoration,
           ),
-          dropdownGlobalKey, // Pass the key
+          dropdownGlobalKey,
+          widget.dropdownBoxDecoration, // Pass the key
         );
         if (v != null) {
           value = v;
