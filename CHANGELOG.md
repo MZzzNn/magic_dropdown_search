@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added the `DropDownBoxDecoration` property to customize the dropdown box.
 
+### Removed
+- Removed the `dropdownBoxDecoration` property as `InputDecoration`.
+
 ## [0.0.5] - 2024-06-10
 
 ### Added
