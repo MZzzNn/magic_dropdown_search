@@ -13,7 +13,7 @@ class MagicDropdownSearch extends StatefulWidget {
   final Widget? empty;
   final InputDecoration? buttonDecoration;
   final InputDecoration? searchDecoration;
-  final BoxDecoration? dropdownBoxDecoration;
+  final DropDownBoxDecoration? dropdownBoxDecoration;
 
   const MagicDropdownSearch({
     required this.onChanged,
@@ -60,6 +60,7 @@ class _MagicDropdownSearchState extends State<MagicDropdownSearch> {
       onTap: () async {
         String? v = await DropDownSearchDialog.show(
           context,
+          dropdownBoxDecoration: widget.dropdownBoxDecoration,
           DropDownSearchBody(
             onChanged: widget.onChanged,
             onChangedSearch: widget.onChangedSearch,
@@ -71,7 +72,6 @@ class _MagicDropdownSearchState extends State<MagicDropdownSearch> {
             notSelectedText: widget.notSelectedText,
             empty: widget.empty,
             searchDecoration: widget.searchDecoration,
-            dropdownBoxDecoration: widget.dropdownBoxDecoration,
           ),
           dropdownGlobalKey, // Pass the key
         );
