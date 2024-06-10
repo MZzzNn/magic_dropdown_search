@@ -14,12 +14,14 @@ class MagicDropdownSearch extends StatefulWidget {
   final InputDecoration? buttonDecoration;
   final InputDecoration? searchDecoration;
   final DropDownBoxDecoration? dropdownBoxDecoration;
+  final Widget Function(String, bool)? itemBuilder;
 
   const MagicDropdownSearch({
     required this.onChanged,
     required this.onChangedSearch,
     this.dropdownItems = const [],
     this.initValue,
+    this.itemBuilder,
     this.dropdownBoxDecoration,
     this.itemHeight,
     this.dropdownHeight,
@@ -71,6 +73,7 @@ class _MagicDropdownSearchState extends State<MagicDropdownSearch> {
             notSelectedText: widget.notSelectedText,
             empty: widget.empty,
             searchDecoration: widget.searchDecoration,
+            itemBuilder: widget.itemBuilder,
           ),
           dropdownGlobalKey,
           widget.dropdownBoxDecoration, // Pass the key
@@ -86,7 +89,7 @@ class _MagicDropdownSearchState extends State<MagicDropdownSearch> {
       },
       child: TextFormField(
         key: dropdownGlobalKey,
-        style: Theme.of(context).textTheme.labelMedium!.copyWith(
+        style: widget.buttonDecoration?.hintStyle ??Theme.of(context).textTheme.labelMedium!.copyWith(
               fontWeight: FontWeight.w400,
               fontSize: isSelecting == true ? null : 11,
               color: isSelecting

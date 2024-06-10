@@ -12,6 +12,7 @@ class DropDownSearchBody extends StatefulWidget {
   final String notSelectedText;
   final Widget? empty;
   final InputDecoration? searchDecoration;
+  final Widget Function(String, bool)? itemBuilder;
 
   const DropDownSearchBody({
     super.key,
@@ -25,6 +26,7 @@ class DropDownSearchBody extends StatefulWidget {
     this.isCanNotSelect = false,
     this.notSelectedText = '--Bitte wählen--',
     this.empty,
+    this.itemBuilder,
   });
 
   @override
@@ -151,7 +153,9 @@ class _DropDownSearchBodyState extends State<DropDownSearchBody> {
                         onChanged(isSelected ? null : item);
                         Navigator.pop(context, item);
                       },
-                      child: _customListView(item, isSelected),
+                      child: widget.itemBuilder != null
+                          ? widget.itemBuilder!(item, isSelected)
+                          : _customListView(item, isSelected),
                     );
                   },
                 );
