@@ -15,12 +15,12 @@ class DropDownSearchDialog extends StatefulWidget {
   });
 
   static Future<String?> show(
-    BuildContext context,
-    Widget body,
-    GlobalKey<FormFieldState<String>> dropdownKey,
-    DropDownBoxDecoration? dropdownBoxDecoration,
-    double dropdownHeight,
-  ) async {
+      BuildContext context,
+      Widget body,
+      GlobalKey<FormFieldState<String>> dropdownKey,
+      DropDownBoxDecoration? dropdownBoxDecoration,
+      double dropdownHeight,
+      ) async {
     return showDialog(
       context: context,
       barrierColor: Colors.black.withOpacity(0.05),
@@ -62,13 +62,15 @@ class _DropDownSearchDialogState extends State<DropDownSearchDialog>
   }
 
   Offset _getPosition(BuildContext context) {
-    RenderBox renderBox = widget.dropdownKey.currentContext!.findRenderObject() as RenderBox;
+    RenderBox renderBox =
+    widget.dropdownKey.currentContext!.findRenderObject() as RenderBox;
     Offset position = renderBox.localToGlobal(Offset.zero);
     return position;
   }
 
   Size _getSize(BuildContext context) {
-    RenderBox renderBox = widget.dropdownKey.currentContext!.findRenderObject() as RenderBox;
+    RenderBox renderBox =
+    widget.dropdownKey.currentContext!.findRenderObject() as RenderBox;
     return renderBox.size;
   }
 
@@ -86,14 +88,26 @@ class _DropDownSearchDialogState extends State<DropDownSearchDialog>
     final size = _getSize(context);
     final screenHeight = _getScreenHeight(context);
     final keyboardHeight = _getKeyboardHeight(context);
-    final availableSpaceBelow = screenHeight - position.dy - size.height - keyboardHeight;
+    final availableSpaceBelow =
+        screenHeight - position.dy - size.height - keyboardHeight;
 
     bool showAbove = availableSpaceBelow < widget.dropdownHeight;
 
+    // Define the space above and below with a margin of 30px
+    double _aboveSpace = position.dy - widget.dropdownHeight - (size.height - 10);
+    double _belowSpace = position.dy + 30;
+
+    // Ensure the dropdown is displayed correctly
+    if (keyboardHeight > 0) {
+      _aboveSpace = keyboardHeight - widget.dropdownHeight + size.height + 10;
+    }
+
     return Stack(
       children: [
-        Positioned(
-          top: showAbove ? position.dy - widget.dropdownHeight : position.dy + 30,
+        AnimatedPositioned(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+          top: showAbove ? _aboveSpace : _belowSpace,
           left: position.dx,
           child: Material(
             color: widget.dropdownBoxDecoration?.color ??

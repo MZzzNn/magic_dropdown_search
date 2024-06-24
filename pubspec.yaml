@@ -1,6 +1,6 @@
 name: magic_dropdown_search
 description: "A flutter package for a dropdown search with dynamic data from Api"
-version: 0.0.9
+version: 0.0.10
 homepage: https://github.com/mzzznn
 repository: https://github.com/mzzznn/magic_dropdown_search
 
