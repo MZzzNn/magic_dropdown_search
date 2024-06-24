@@ -6,14 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [0.0.9] - 2024-06-15
+## [0.0.9] 
 
 ### Fixed
 - Improve dialog positioning and handle the overflow issue.
 - Fixed the issue with the dropdown not closing when the user taps outside the dropdown.
 
 
-## [0.0.8] - 2024-06-13
+## [0.0.8] 
 
 ### Added
 - Added the `itemBuilder` property to customize the dropdown items.
@@ -23,12 +23,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed the issue with the dropdown style not updating.
 
 
-## [0.0.7] - 2024-06-12
+## [0.0.7] 
 
 ### Fixed
 - Fixed the issue with the dropdown style not updating.
 
-## [0.0.6] - 2024-06-11
+## [0.0.6] 
 
 ### Added
 - Added the `DropDownBoxDecoration` property to customize the dropdown box.
@@ -36,13 +36,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Removed the `dropdownBoxDecoration` property as `InputDecoration`.
 
-## [0.0.5] - 2024-06-10
+## [0.0.5] 
 
 ### Added
 - Added the `dropdownBoxDecoration` property to customize the dropdown box.
 
 
-## [0.0.4] - 2024-06-09
+## [0.0.4]
 
 ### Added
 - Added the `buttonDecoration` property to customize the dropdown button.
@@ -52,7 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed the issue with the dropdown global key.
 
-## [0.0.3] - 2024-01-03
+## [0.0.3] 
 
 ### Added
 - Added the `isCanNotSelect` property to disable the selection of a particular item in the dropdown.
@@ -61,12 +61,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Improve search functionality and handle empty lists
 
-## [0.0.2] - 2024-01-02
+## [0.0.2] 
 
 ### Fixed
 - Fixed the issue with the dropdown not making the selected item visible when the dropdown is opened.
 
-## [0.0.1] - 2024-01-01
+## [0.0.1] 
 
 ### Added
 - Initial release of the "magic_dropdown_search" package.
