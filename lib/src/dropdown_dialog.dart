@@ -2,6 +2,7 @@ part of '../magic_dropdown_search.dart';
 
 class DropDownSearchDialog extends StatefulWidget {
   final Widget body;
+  final double dropdownHeight;
   final GlobalKey<FormFieldState<String>> dropdownKey;
   final DropDownBoxDecoration? dropdownBoxDecoration;
 
@@ -10,6 +11,7 @@ class DropDownSearchDialog extends StatefulWidget {
     required this.body,
     required this.dropdownKey,
     this.dropdownBoxDecoration,
+    required this.dropdownHeight,
   });
 
   static Future<String?> show(
@@ -17,6 +19,7 @@ class DropDownSearchDialog extends StatefulWidget {
     Widget body,
     GlobalKey<FormFieldState<String>> dropdownKey,
     DropDownBoxDecoration? dropdownBoxDecoration,
+    double dropdownHeight,
   ) async {
     return showDialog(
       context: context,
@@ -25,6 +28,7 @@ class DropDownSearchDialog extends StatefulWidget {
         return DropDownSearchDialog(
             body: body,
             dropdownKey: dropdownKey,
+            dropdownHeight: dropdownHeight,
             dropdownBoxDecoration: dropdownBoxDecoration);
       },
     );
@@ -58,25 +62,39 @@ class _DropDownSearchDialogState extends State<DropDownSearchDialog>
   }
 
   Offset _getPosition(BuildContext context) {
-    RenderBox renderBox = widget.dropdownKey.currentContext!.findRenderObject()
-        as RenderBox; // Use the key from the widget
+    RenderBox renderBox = widget.dropdownKey.currentContext!.findRenderObject() as RenderBox;
     Offset position = renderBox.localToGlobal(Offset.zero);
     return position;
   }
 
   Size _getSize(BuildContext context) {
-    RenderBox renderBox = widget.dropdownKey.currentContext!.findRenderObject()
-        as RenderBox; // Use the key from the widget
+    RenderBox renderBox = widget.dropdownKey.currentContext!.findRenderObject() as RenderBox;
     return renderBox.size;
+  }
+
+  double _getScreenHeight(BuildContext context) {
+    return MediaQuery.of(context).size.height;
+  }
+
+  double _getKeyboardHeight(BuildContext context) {
+    return MediaQuery.of(context).viewInsets.bottom;
   }
 
   @override
   Widget build(BuildContext context) {
+    final position = _getPosition(context);
+    final size = _getSize(context);
+    final screenHeight = _getScreenHeight(context);
+    final keyboardHeight = _getKeyboardHeight(context);
+    final availableSpaceBelow = screenHeight - position.dy - size.height - keyboardHeight;
+
+    bool showAbove = availableSpaceBelow < widget.dropdownHeight;
+
     return Stack(
       children: [
         Positioned(
-          top: _getPosition(context).dy + 35,
-          left: _getPosition(context).dx,
+          top: showAbove ? position.dy - widget.dropdownHeight : position.dy + 30,
+          left: position.dx,
           child: Material(
             color: widget.dropdownBoxDecoration?.color ??
                 Theme.of(context).scaffoldBackgroundColor,
@@ -94,7 +112,8 @@ class _DropDownSearchDialogState extends State<DropDownSearchDialog>
                 sizeFactor: _animation,
                 axisAlignment: 0.0,
                 child: Container(
-                  width: _getSize(context).width,
+                  width: size.width,
+                  height: widget.dropdownHeight,
                   padding: const EdgeInsets.all(10),
                   child: widget.body,
                 ),

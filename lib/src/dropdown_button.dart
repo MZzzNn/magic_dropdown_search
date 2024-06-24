@@ -76,7 +76,8 @@ class _MagicDropdownSearchState extends State<MagicDropdownSearch> {
             itemBuilder: widget.itemBuilder,
           ),
           dropdownGlobalKey,
-          widget.dropdownBoxDecoration, // Pass the key
+          widget.dropdownBoxDecoration,
+          widget.dropdownHeight ?? 300,
         );
         if (v != null) {
           value = v;

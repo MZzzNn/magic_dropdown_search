@@ -16,108 +16,105 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.blue,
         ),
         body: Center(
-          child: Row(
+          child: Column(
             children: [
-              Expanded(
-                child: MagicDropdownSearch(
-                  // label: 'Search',
-                  onChanged: (value) {
-                    print('Selected value: $value');
-                  },
-                  onChangedSearch: (searchTerm) async {
-                    // Replace this with your own search logic
-                    return ['Item1', 'Item2', 'Item3'];
-                  },
-                  dropdownItems:const  ['Item1', 'Item2', 'Item3'],
-                  // hint: 'Select an item',
-                  initValue: 'Item1',
-                  // buttonWidth: 200,
-                  itemHeight: 50,
-                  dropdownHeight: 200,
-                  // buttonHeight: 50,
-                  buttonDecoration: const InputDecoration(
-                    hintText: 'Select an item',
-                    labelText: 'Search',
-                    prefixIcon: Icon(Icons.search),
-                    labelStyle: TextStyle(color: Colors.blue),
-                    errorStyle: TextStyle(color: Colors.red),
-                    hintStyle: TextStyle(color: Colors.grey),
-                  ),
-                  dropdownBoxDecoration: DropDownBoxDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      side: BorderSide(
-                        color: Colors.blue,
-                        width: 1,
-                      ),
+              MagicDropdownSearch(
+                // label: 'Search',
+                onChanged: (value) {
+                  print('Selected value: $value');
+                },
+                onChangedSearch: (searchTerm) async {
+                  // Replace this with your own search logic
+                  return ['Item1', 'Item2', 'Item3'];
+                },
+                dropdownItems:const  ['Item1', 'Item2', 'Item3'],
+                // hint: 'Select an item',
+                initValue: 'Item1',
+                // buttonWidth: 200,
+                itemHeight: 50,
+                dropdownHeight: 200,
+                // buttonHeight: 50,
+                buttonDecoration: const InputDecoration(
+                  hintText: 'Select an item',
+                  labelText: 'Search',
+                  prefixIcon: Icon(Icons.search),
+                  labelStyle: TextStyle(color: Colors.blue),
+                  errorStyle: TextStyle(color: Colors.red),
+                  hintStyle: TextStyle(color: Colors.grey),
+                ),
+                dropdownBoxDecoration: DropDownBoxDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: BorderSide(
+                      color: Colors.blue,
+                      width: 1,
                     ),
                   ),
                 ),
               ),
-              Expanded(
-                child: MagicDropdownSearch(
-                  // label: 'Search',
-                  onChanged: (value) {
-                    print('Selected value: $value');
-                  },
-                  onChangedSearch: (searchTerm) async {
-                    // Replace this with your own search logic
-                    return ['Item1 sssssssssssss', 'Item2', 'Item3'];
-                  },
-                  dropdownItems:const  ['Item1 sssssssssssss', 'Item2', 'Item3'],
-                  // hint: 'Select an item',
-                  // buttonWidth: 200,
-                  itemHeight: 50,
-                  dropdownHeight: 200,
-                  // buttonHeight: 50,
-                  searchDecoration: const InputDecoration(
-                    hintText: 'Search',
-                    labelText: 'Search',
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    prefixIcon: Icon(Icons.search),
-                    labelStyle: TextStyle(color: Colors.blue),
-                    errorStyle: TextStyle(color: Colors.red),
-                    hintStyle: TextStyle(color: Colors.grey),
-                  ),
-                  itemBuilder: (item, isSelected) {
-                    return Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                      decoration: BoxDecoration(
-                        color: isSelected ? Colors.red.withOpacity(0.1) : Colors.transparent,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        children: [
-                          if (isSelected) ...[
-                            const Icon(
-                              Icons.check,
-                              size: 16,
-                              color: Color(0xff111111),
-                            ),
-                            const SizedBox(width: 7.5),
-                          ],
-                          Expanded(
-                            child: Text(
-                              item,
-                              maxLines: 3,
-                              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                                  color: const Color(0xff111111), fontWeight: FontWeight.w400),
-                            ),
+              Spacer(),
+              MagicDropdownSearch(
+                // label: 'Search',
+                onChanged: (value) {
+                  print('Selected value: $value');
+                },
+                onChangedSearch: (searchTerm) async {
+                  // Replace this with your own search logic
+                  return ['Item1 sssssssssssss', 'Item2', 'Item3'];
+                },
+                dropdownItems:const  ['Item1 sssssssssssss', 'Item2', 'Item3'],
+                // hint: 'Select an item',
+                // buttonWidth: 200,
+                itemHeight: 50,
+                dropdownHeight: 200,
+                // buttonHeight: 50,
+                searchDecoration: const InputDecoration(
+                  hintText: 'Search',
+                  labelText: 'Search',
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  prefixIcon: Icon(Icons.search),
+                  labelStyle: TextStyle(color: Colors.blue),
+                  errorStyle: TextStyle(color: Colors.red),
+                  hintStyle: TextStyle(color: Colors.grey),
+                ),
+                itemBuilder: (item, isSelected) {
+                  return Container(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                    decoration: BoxDecoration(
+                      color: isSelected ? Colors.red.withOpacity(0.1) : Colors.transparent,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      children: [
+                        if (isSelected) ...[
+                          const Icon(
+                            Icons.check,
+                            size: 16,
+                            color: Color(0xff111111),
                           ),
+                          const SizedBox(width: 7.5),
                         ],
-                      ),
-                    );
-                  },
-                  buttonDecoration: const InputDecoration(
-                    hintText: 'Select an item',
-                    labelText: 'Search',
-                    prefixIcon: Icon(Icons.search),
-                    labelStyle: TextStyle(color: Colors.blue),
-                    errorStyle: TextStyle(color: Colors.red),
-                    hintStyle: TextStyle(color: Colors.grey),
-                  ),
+                        Expanded(
+                          child: Text(
+                            item,
+                            maxLines: 3,
+                            style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                                color: const Color(0xff111111), fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                buttonDecoration: const InputDecoration(
+                  hintText: 'Select an item',
+                  labelText: 'Search',
+                  prefixIcon: Icon(Icons.search),
+                  labelStyle: TextStyle(color: Colors.blue),
+                  errorStyle: TextStyle(color: Colors.red),
+                  hintStyle: TextStyle(color: Colors.grey),
                 ),
               ),
             ],
